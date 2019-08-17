@@ -2,7 +2,7 @@ const Dev = require('../models/Dev');
 
 module.exports = {
   async store(request, response) {
-    const { user } = request.header;
+    const { user } = request.headers;
     const { devId } = request.params;
 
     const loggedDev = await Dev.findById(user);
@@ -12,7 +12,7 @@ module.exports = {
       return response.status(400).json({ error: 'Dev does not exists' });
     }
 
-    if (targetDev.likes.include(loggedDev._id)) {
+    if (targetDev.likes.includes(loggedDev._id)) {
       console.log('MATCH');
     }
 
