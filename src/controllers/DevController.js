@@ -19,21 +19,21 @@ module.exports = {
   },
 
   async store(request, response) {
-    const { userName } = request.body;
+    const { username } = request.body;
 
-    const userExists = await Dev.findOne({ user: userName });
+    const userExists = await Dev.findOne({ user: username });
 
     if (userExists) return response.json(userExists);
 
     const ghResponse = await axios.get(
-      `https://api.github.com/users/${userName}`
+      `https://api.github.com/users/${username}`
     );
 
     const { name, bio, avatar_url: avatar } = ghResponse.data;
 
     const dev = await Dev.create({
       name,
-      user: userName,
+      user: username,
       bio,
       avatar,
     });
